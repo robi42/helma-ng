@@ -60,11 +60,11 @@ HttpClient.prototype.execReq = function (uri, method) {
    }
 
    return this.execute(request);
-}
+};
 
 
 var HttpResponse = rhino.extendJavaClass(org.apache.http.message.BasicHttpResponse);
 
 HttpResponse.prototype.getBody = function () {
    return org.apache.http.util.EntityUtils.toString(this.getEntity());
-}
+};
