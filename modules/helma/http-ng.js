@@ -57,6 +57,8 @@ HttpClient.prototype.execReq = function (uri, method) {
       request = new org.apache.http.client.methods.HttpPut(uri);
    } else if (method.toUpperCase() == 'DELETE') {
       request = new org.apache.http.client.methods.HttpDelete(uri);
+   } else if (method.toUpperCase() == 'HEAD') {
+      request = new org.apache.http.client.methods.HttpHead(uri);
    }
 
    return this.execute(request);
