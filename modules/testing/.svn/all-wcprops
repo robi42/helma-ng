@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/9116/sandbox/aida/modules/testing
+END
+unittest.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/9116/sandbox/aida/modules/testing/unittest.js
+END
+selftest.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/9115/sandbox/aida/modules/testing/selftest.js
+END
