@@ -1,1 +1,1 @@
-java -jar run.jar apps/$1 modules/
+java -jar run.jar apps/$1

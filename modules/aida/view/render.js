@@ -135,10 +135,12 @@ importModule("helma.logging", "logging");
       };
       
       var layoutPath = this.getLayoutPath();
-      if (layoutPath) {
+      if (layoutPath && getResource(layoutPath).exists()) {
          var renderer = this.templating.getRenderer("skin");
          renderer.render(layoutPath, context);         
-      }      
+      } else {
+         res.write(context.content.main);
+      }
    }   
 
    // private functions
