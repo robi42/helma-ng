@@ -38,7 +38,7 @@ this.initStore();
 
 
    /**
-    * Use this for setting the path in which hibernate.properties resides.
+    * Use this for setting the path in which hibernate.properties file resides.
     */
    this.setConfigPath = function (path) {
       configPropsFileRelativePath = path + '/hibernate.properties';
@@ -164,10 +164,10 @@ this.initStore();
     * Used for decorating model objects, fetched from DB, with resp. instance methods.
     */
    this.addInstanceMethods = function (object) {
-      var constructor = store.getTypeRegistry()[object.$type$];
+      var constructor = store.typeRegistry[object.$type$];
       var instance = new constructor();
 
-      for (var i in instance) {
+      for (i in instance) {
          if (i != '$type$') {
             object[i] = instance[i];
          }
@@ -205,12 +205,12 @@ function Storable(object, properties) {
    var scriptableMap = new ScriptableMap(new java.util.HashMap());
 
    // add all instance methods of object to scriptableMap
-   for (var i in object) {
+   for (i in object) {
       scriptableMap[i] = object[i];
    }
 
    // add all properties and set $type$, accordingly
-   for (var j in properties) {
+   for (j in properties) {
       scriptableMap[j] = properties[j];
    }
    scriptableMap.$type$ = type;
@@ -230,15 +230,11 @@ function Storable(object, properties) {
  * resp. instance methods when fetched from DB.
  */
 function Store() {
-   var typeRegistry = {};
-
-   this.getTypeRegistry = function () {
-      return typeRegistry;
-   };
+   this.typeRegistry = {};
 
    this.registerType = function (ctor) {
       // add type to registry
-      typeRegistry[ctor.name] = ctor;
+      this.typeRegistry[ctor.name] = ctor;
       log.debug(ctor.name + ' type registered.');
 
       // install get, find, all and list methods on constructor
@@ -338,15 +334,19 @@ function Store() {
          case 'find':
             result = new ScriptableList(sess.find(new java.lang.String(params.query)));
 
-            for (var i in result) {
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
 
          case 'getAll':
-            result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
+            var criteria = sess.createCriteria(params.type);
 
-            for (var i in result) {
+            criteria.setCacheable(true);
+
+            result = new ScriptableList(criteria.list());
+
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
@@ -380,7 +380,7 @@ function Store() {
 
             result = new ScriptableList(criteria.list());
 
-            for (var i in result) {
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
@@ -403,7 +403,7 @@ function Store() {
  */
 function initStore() {
    store = store || new Store();
-   log.info('Store initialized with empty typeRegistry: ' + uneval( store.getTypeRegistry() ));
+   log.info('Store initialized with empty typeRegistry: ' + uneval( store.typeRegistry ));
 }
 
 
@@ -416,7 +416,7 @@ Set.prototype.helmatize = function () {
    var item, items = [];
    var arraySet = this.toArray();
 
-   for (var i in arraySet) {
+   for (i in arraySet) {
       item = new ScriptableMap(arraySet[i]);
       items[i] = addInstanceMethods(item);
    }

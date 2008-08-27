@@ -19,10 +19,8 @@ function Article(props) {
    };
 
    this.getCommentsCountMsg = function () {
-      var commentsCount = this.comments.size();
-
-      return (commentsCount == 1) ? (commentsCount + ' comment') :
-             (commentsCount + ' comments');
+      return (this.commentsCount == 1) ? (this.commentsCount + ' comment') :
+             (this.commentsCount + ' comments');
    };
 
    return new db.Storable(this, props);
@@ -40,7 +38,8 @@ function createArticle(data) {
              ( (data.text.processMarkdown().stripTags() != 0) ?
                data.text.processMarkdown().stripTags().trim().head(47, '...') :
                '...' ),
-      text: data.text
+      text: data.text,
+      commentsCount: 0
    };
    var article = new Article(props);
    article.save();
@@ -96,15 +95,15 @@ function getArticlesFeed(feedType) {
 
    var entry, entries = new java.util.ArrayList();
 
-   for (var i in articles) {
+   for each (article in articles) {
       entry = new com.sun.syndication.feed.synd.SyndEntryImpl();
-      entry.setTitle(articles[i].title);
-      entry.setLink('show?id=' + articles[i].id);
-      entry.setPublishedDate(articles[i].createTime);
+      entry.setTitle(article.title);
+      entry.setLink('show?id=' + article.id);
+      entry.setPublishedDate(article.createTime);
 
       var description = new com.sun.syndication.feed.synd.SyndContentImpl();
       description.setType('text/html');
-      description.setValue(articles[i].getMarkdownedText());
+      description.setValue(article.getMarkdownedText());
       entry.setDescription(description);
 
       entries.add(entry);

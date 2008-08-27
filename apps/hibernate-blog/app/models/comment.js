@@ -6,7 +6,6 @@ importFromModule('modules.validation', '*');
 
 importFromModule('app.models.post', 'Post');
 importFromModule('app.models.article', '*');
-importFromModule('app.models.user', '*');
 
 
 function Comment(props) {
@@ -34,13 +33,14 @@ function createComment(data) {
    this.validateCreateComment(data);
 
    var props = {
-      creator: getSessionUser(),
+      creator: data.creator,
       createTime: new java.util.Date(),
       text: data.text.stripTags(),
    };
    var comment = new Comment(props);
    var articleTarget = Article.get(data.articleTargetId);
    articleTarget.comments.add(comment);
+   articleTarget.commentsCount++;
 
    return new Result('Comment was created successfully.', comment);
 }
@@ -52,7 +52,10 @@ function validateCreateComment(data) {
 
 function deleteComment(id) {
    var comment = Comment.get(id);
+   var articleTarget = Article.get(comment.articleTargetId);
    comment.remove();
+   articleTarget.commentsCount--;
+   articleTarget.save();
 
    return new Result('Comment was deleted successfully.');
 }
@@ -70,16 +73,16 @@ function getCommentsFeed(feedType) {
 
    var entry, entries = new java.util.ArrayList();
 
-   for (var i in comments) {
+   for each (comment in comments) {
       entry = new com.sun.syndication.feed.synd.SyndEntryImpl();
-      entry.setTitle(comments[i].getFeedTitle());
-      entry.setLink('/articles/show?id=' + comments[i].articleTargetId +
-                    '#comment' + comments[i].id);
-      entry.setPublishedDate(comments[i].createTime);
+      entry.setTitle(comment.getFeedTitle());
+      entry.setLink('/articles/show?id=' + comment.articleTargetId +
+                    '#comment' + comment.id);
+      entry.setPublishedDate(comment.createTime);
 
       var description = new com.sun.syndication.feed.synd.SyndContentImpl();
       description.setType('text/html');
-      description.setValue(comments[i].getMarkdownedText());
+      description.setValue(comment.getMarkdownedText());
       entry.setDescription(description);
 
       entries.add(entry);

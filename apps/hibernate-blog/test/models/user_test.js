@@ -2,10 +2,10 @@ importFromModule('helma.unittest', '*');
 
 importFromModule('test.helpers', '*');
 
-importFromModule('app.models.User', '*');
+importFromModule('app.models.user', '*');
 
 
-var testCase = new TestCase('User Model');
+var testCase = new TestCase('models.user');
 
 handleDbTxn(testCase);
 

@@ -3,7 +3,7 @@ importFromModule('helma.skin', 'render');
 importFromModule('app.modules.formHandling', 'handleMessage');
 
 importFromModule('app.modules.security', 'getChecks');
-importFromModule('app.models.User', 'getSessionUser');
+importFromModule('app.models.user', 'getSessionUser');
 
 
 function renderView(context, skinName) {
@@ -37,7 +37,7 @@ function renderList(collection, skin, condition) {
    var item, context = {};
 
    if (condition || (condition === undefined)) {
-      for (var i in collection) {
+      for (i in collection) {
          item = collection[i];
          context.itemIndex = i;
          context.itemNumber = parseInt(i) + 1;
@@ -84,7 +84,7 @@ function renderSub(macrotag, skin, condition, context) {
 var addObjectPropsToContext = function (object, context) {
    var key;
 
-   for (var i in object) {
+   for (i in object) {
       key = i.startsWith('get') ? (i[3].toLowerCase() + i.substring(4)) : i;
 
       if ( (i != '$type$') && (i != 'save') && (i != 'remove') &&

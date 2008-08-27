@@ -4,10 +4,10 @@ importModule('helma.hibernate', 'db');
 
 importFromModule('test.helpers', '*');
 
-importFromModule('app.models.User', 'User');
+importFromModule('app.models.user', 'User');
 
 
-var testCase = new TestCase('Environment');
+var testCase = new TestCase('environment');
 
 /**
  * Testing the test environment.
@@ -21,6 +21,10 @@ testCase.testTruth = function () {
  */
 testCase.testHibernate = function () {
    db.beginTxn();
+
+   db.store.query('delete from Article').executeUpdate();
+   db.store.query('delete from Comment').executeUpdate();
+   db.store.query('delete from User').executeUpdate();
 
    createTestUser();
 
