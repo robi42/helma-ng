@@ -19,7 +19,7 @@ importFromModule('helma.functional', 'partial');
 importModule('helma.logging', 'logging');
 var log = logging.getLogger(__name__);
 
-var __shared__ = true;
+__shared__ = true;
 
 
 // used for holding the Store instance
@@ -42,6 +42,14 @@ this.initStore();
     */
    this.setConfigPath = function (path) {
       configPropsFileRelativePath = path + '/hibernate.properties';
+   };
+
+
+   /**
+    * Use this for setting the path where the *.hbm.xml mapping files resides.
+    */
+   this.setMappingsDir = function (path) {
+      mappingsDirRelativePath = path;
    };
 
 
@@ -141,6 +149,16 @@ this.initStore();
       log.info('Configuration set.');
 
       sessionFactory = config.buildSessionFactory();
+   };
+
+
+   /**
+    * Use this for rebuilding the DB schema from the *.hbm.xml mapping files.
+    */
+   this.rebuildDbSchema = function () {
+      setConfig();
+
+      new org.hibernate.tool.hbm2ddl.SchemaExport(config).execute(true, true, false, false);
    };
 
 
