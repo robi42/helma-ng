@@ -145,6 +145,7 @@ this.initStore();
       // use easy hibernate (eh) cache
       config.setProperty('hibernate.cache.provider_class',
                          'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
+      // use c3p0 connection pooling
       config.setProperty('hibernate.connection.provider_class',
                          'org.hibernate.connection.C3P0ConnectionProvider');
 
