@@ -3,16 +3,17 @@
  */
 
 importJar('hibernate/antlr-2.7.6.jar');
+importJar('hibernate/c3p0-0.9.1.jar');
 importJar('hibernate/commons-collections-3.1.jar');
+importJar('hibernate/commons-logging-1.1.1.jar');
 importJar('hibernate/dom4j-1.6.1.jar');
+importJar('hibernate/ehcache-1.2.3.jar');
+importJar('hibernate/hibernate3.jar');
 importJar('hibernate/javassist-3.4.GA.jar');
+importJar('hibernate/jta-1.1.jar');
+importJar('hibernate/jcl104-over-slf4j-1.4.2.jar');
 importJar('hibernate/slf4j-api-1.4.2.jar');
 importJar('hibernate/slf4j-log4j12-1.4.2.jar');
-//importJar('hibernate/hibernate-cglib-repack-2.1_3.jar');
-importJar('hibernate/hibernate3.jar');
-importJar('hibernate/jta-1.1.jar');
-importJar('hibernate/c3p0-0.9.1.jar');
-importJar('hibernate/ehcache-1.2.3.jar');
 
 importModule('helma.rhino', 'rhino');
 importFromModule('helma.functional', 'partial');
@@ -144,6 +145,8 @@ this.initStore();
       // use easy hibernate (eh) cache
       config.setProperty('hibernate.cache.provider_class',
                          'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
+      config.setProperty('hibernate.connection.provider_class',
+                         'org.hibernate.connection.C3P0ConnectionProvider');
 
       isConfigured = true;
       log.info('Configuration set.');
@@ -158,8 +161,8 @@ this.initStore();
    this.rebuildDbSchema = function () {
       setConfig();
 
-//      new org.hibernate.tool.hbm2ddl.SchemaExport(config).execute(true, true, false, false);
-      new org.hibernate.tool.hbm2ddl.SchemaUpdate(config).setOutputFile('db/update.sql').execute(true, false);
+      new org.hibernate.tool.hbm2ddl.SchemaExport(config).setOutputFile('db/schema.sql')
+                                                         .execute(true, true, false, false);
    };
 
 
