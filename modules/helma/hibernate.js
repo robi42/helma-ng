@@ -139,11 +139,11 @@ this.initStore();
       // enable session binding to managed context
       config.setProperty('hibernate.current_session_context_class', 'thread');
       // enable the second level cache
-      config.setProperty('hibernate.cache.use_second_level_cache', 'true');
+//      config.setProperty('hibernate.cache.use_second_level_cache', 'true');
       config.setProperty('hibernate.cache.use_query_cache', 'true');
       // use easy hibernate (eh) cache
       config.setProperty('hibernate.cache.provider_class',
-                         'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
+                         'org.hibernate.cache.EhCacheProvider');
       // use c3p0 connection pooling
       config.setProperty('hibernate.connection.provider_class',
                          'org.hibernate.connection.C3P0ConnectionProvider');
