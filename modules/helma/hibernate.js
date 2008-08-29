@@ -11,7 +11,6 @@ importJar('hibernate/ehcache-1.2.3.jar');
 importJar('hibernate/hibernate3.jar');
 importJar('hibernate/javassist-3.4.GA.jar');
 importJar('hibernate/jta-1.1.jar');
-importJar('hibernate/jcl104-over-slf4j-1.4.2.jar');
 importJar('hibernate/slf4j-api-1.4.2.jar');
 importJar('hibernate/slf4j-log4j12-1.4.2.jar');
 
