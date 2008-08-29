@@ -138,8 +138,7 @@ this.initStore();
                          'org.hibernate.transaction.JDBCTransactionFactory');
       // enable session binding to managed context
       config.setProperty('hibernate.current_session_context_class', 'thread');
-      // enable the second level cache
-//      config.setProperty('hibernate.cache.use_second_level_cache', 'true');
+      // enable the second level query cache
       config.setProperty('hibernate.cache.use_query_cache', 'true');
       // use easy hibernate (eh) cache
       config.setProperty('hibernate.cache.provider_class',
