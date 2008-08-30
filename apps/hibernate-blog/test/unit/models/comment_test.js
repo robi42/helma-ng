@@ -6,7 +6,7 @@ importFromModule('app.models.comment', '*');
 importFromModule('app.models.article', '*');
 
 
-var testCase = new TestCase('models.comment');
+var testCase = new TestCase('comment');
 
 handleDbTxn(testCase);
 

@@ -5,7 +5,7 @@ importFromModule('test.helpers', '*');
 importFromModule('app.models.user', '*');
 
 
-var testCase = new TestCase('models.user');
+var testCase = new TestCase('user');
 
 handleDbTxn(testCase);
 

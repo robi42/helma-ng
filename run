@@ -1,5 +1,5 @@
 #!/bin/sh
-# Shell script for starting Helma NG with a JDK-like virtual machine.
+# Shell script for running Helma NG with a JDK-like virtual machine.
 
 # uncomment to set JAVA_HOME variable
 #JAVA_HOME=
