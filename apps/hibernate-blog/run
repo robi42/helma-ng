@@ -8,7 +8,7 @@
 JAVA_OPTIONS="-server -Xmx256m"
 
 # adjust to set path of Helma NG installation
-HELMA_HOME=../..
+HELMA_HOME="../.."
 
 
 ###########################################################
